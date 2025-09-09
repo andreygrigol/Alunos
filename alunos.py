@@ -7,10 +7,10 @@ import os
 alunos = []
 
 
-def tirarMedia():
+def cadastrarNota():
     # Pega nome e nota do aluno
-    nome_aluno = entry_nome.get()
-    nota_aluno = entry_nota.get()
+    nome_aluno = entry_nome.get().strip()
+    nota_aluno = entry_nota.get().strip()
 
     #Checa que as caixas não estão vazias
     if not nome_aluno and not nota_aluno:
@@ -107,6 +107,17 @@ def adicionarPlanilha():
     messagebox.showinfo("Sucesso", f"Aluno adicionado na planilha {filename}")
 
 
+def calcularMedia():
+    if not alunos:
+        messagebox.showwarning("Atenção", "Nenhum aluno cadastrado")
+        return
+
+    notas = [aluno["Nota"] for aluno in alunos]
+    media = sum(notas) / len(notas)
+
+    messagebox.showinfo("Média da turma", f"A média da turma foi: {media:.2f}")
+
+
 root = tk.Tk()
 root.title("Média dos alunos")
 
@@ -132,13 +143,16 @@ nome_text = tk.Text(root, height=10, width=60)
 nome_text.grid(row=3, column=0, columnspan=2, padx=5, pady=5)
 
 # Botões com as funções
-btn_cadastrar_nota = tk.Button(root, text="Cadastrar Nota", command=tirarMedia)
+btn_cadastrar_nota = tk.Button(root, text="Cadastrar Nota", command=cadastrarNota)
 btn_cadastrar_nota.grid(row=4, column=0, padx=5, pady=10, sticky="ew")
 
 btn_gerar_planilhas = tk.Button(root, text="Gerar planilhas", command=gerarPlanilha)
 btn_gerar_planilhas.grid(row=4, column=1, padx=5, pady=10, sticky="ew")
 
 btn_adicionar_planilha = tk.Button(root, text="Adicionar nas planilhas", command=adicionarPlanilha)
-btn_adicionar_planilha.grid(row=5, column=0, columnspan=2, padx=5, pady=10, sticky="ew")
+btn_adicionar_planilha.grid(row=5, column=0, columnspan=1, padx=5, pady=5, sticky="ew")
+
+btn_media_turma = tk.Button(root, text="Média da turma", command=calcularMedia)
+btn_media_turma.grid(row=5, column=1, columnspan=1, padx=5, pady=5, sticky="ew")
 
 root.mainloop()
