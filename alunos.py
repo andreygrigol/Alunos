@@ -62,6 +62,8 @@ def gerarPlanilha():
         df = pd.DataFrame(reprovados).sort_values(by="Nome")
         df.to_excel("reprovados.xlsx", index=False)
 
+    messagebox.showinfo("Sucesso", "As planilhas foram criadas com sucesso!")
+
 
 def adicionarPlanilha():
     nome_aluno = entry_nome.get().strip()
